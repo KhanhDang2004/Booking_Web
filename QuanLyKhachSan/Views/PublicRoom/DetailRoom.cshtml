@@ -4,6 +4,19 @@
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 
+<style>
+    .star1 {
+        font-size: 30px;
+        color: gray;
+        cursor: pointer;
+    }
+
+        .star1:hover,
+        .star1.active {
+            color: #fd7e14;
+        }
+
+</style>
 
 <div class="hero-wrap js-fullheight" style="background-image: url('https://onetouchmedia.vn/wp-content/uploads/2019/10/N.NT-65-1024x683.jpg'); height: 400px ">
     <div class="overlay"></div>
@@ -70,12 +83,12 @@
             <div class="col-lg-12">
                 <div class="row">
                     @*<div class="col-md-12 ">
-                        <div class="s">
-                            <div class="item">
-                                <img src="/Content/images/@ViewBag.Room.image" class="hotel-img" />
-                            </div>
-                        </div>
-                    </div>*@
+            <div class="s">
+                <div class="item">
+                    <img src="/Content/images/@ViewBag.Room.image" class="hotel-img" />
+                </div>
+            </div>
+        </div>*@
                     <div class="col-md-12 hotel-single mt-4 mb-5 ">
 
                         <h2>@ViewBag.Room.name</h2>
@@ -85,6 +98,8 @@
                         <h5>Giá gốc : @ViewBag.Room.cost VNĐ</h5>
                         <h6>Giảm giá :  @ViewBag.Room.discount %</h6>
                         <h5>Giá hiện tại : @priceNew VNĐ </h5>
+                        <h5 class="days"><span>Số lượng người lớn: @ViewBag.Room.numberAdult</span></h5>
+                        <h5 class="days"><span>Số lượng trẻ em: @ViewBag.Room.numberChildren</span></h5>
                         <p class="rate mb-5">
                             <span class="loc"><a href="#"><i class="icon-map"></i><span>@ViewBag.Room.Type.name</span></a></span>
                             <span class="star">
@@ -95,31 +110,56 @@
                                 <i class="icon-star"></i>
                                 <span>@ViewBag.Room.view lượt xem</span>
                         </p>
+                        <p class="days"><span>Số lượng người lớn: @ViewBag.Room.numberAdult</span></p>
+                        <p class="days"><span>Số lượng trẻ em: @ViewBag.Room.numberChildren</span></p>
                         @*<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" src="https://antimatter.vn/wp-content/uploads/2022/10/hinh-anh-3d.jpg" alt="First slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="https://haycafe.vn/wp-content/uploads/2022/01/Hinh-nen-Su-Tu-dep-ngau-nhat.jpg" alt="Second slide">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/01/hinh-nen-su-tu-oai-ve.jpeg?ssl\u003d1" alt="Third slide">
-                                </div>
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>*@
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="https://antimatter.vn/wp-content/uploads/2022/10/hinh-anh-3d.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://haycafe.vn/wp-content/uploads/2022/01/Hinh-nen-Su-Tu-dep-ngau-nhat.jpg" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/01/hinh-nen-su-tu-oai-ve.jpeg?ssl\u003d1" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>*@
                         <h5>Mô tả phòng</h5>
                         <p>@Html.Raw(ViewBag.Room.description)</p>
+                        <h5>Đánh giá</h5>
+                        <div id="rating">
+                            <span class="star1" data-star="1">&#9733;</span>
+                            <span class="star1" data-star="2">&#9733;</span>
+                            <span class="star1" data-star="3">&#9733;</span>
+                            <span class="star1" data-star="4">&#9733;</span>
+                            <span class="star1" data-star="5">&#9733;</span>
+                        </div>
+                        <div id="comments">
+                            <ul id="comment-list">
+                                <li>Comment 1</li>
+                                <li>Comment 2</li>
+                            </ul>
+                            <form id="comment-form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="comment-input" placeholder="Nhập bình luận tại đây..." required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" id="comment-submit" value="Bình luận" class="btn btn-primary py-3">
+                                </div>
+                                    
+                            </form>
+                        </div>
                     </div>
-
+                  
 
                     <div class="col-md-12 hotel-single  mb-5 mt-4">
                         <h4 class="mb-5">Thuê phòng</h4>
@@ -136,7 +176,7 @@
                                     <div class="col-md-6">
                                         <label>Ngày đi:</label>
                                         <div class="form-group">
-                                            <input type="date"  name="checkOutDate" class="form-control" required placeholder="Date from">
+                                            <input type="date" name="checkOutDate" class="form-control" required placeholder="Date from">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -166,51 +206,102 @@
                     </div>
 
                     @*<div class="col-md-12 hotel-single  mb-5 mt-5">
-                        <h4 class="mb-4">Các phòng khác có thể bạn sẽ thích</h4>
-                        <div class="row">
-                            @foreach (var item in ViewBag.ListRoomRelated)
-                            {
-                                <div class="col-sm col-md-6 col-lg ftco-animate">
-                                    <div class="destination">
-                                        <a href="/PublicRoom/DetailRoom/@item.idRoom" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(/Content/images/@item.image);">
-                                            <div class="icon d-flex justify-content-center align-items-center">
-                                                <span class="icon-search2"></span>
-                                            </div>
-                                        </a>
-                                        <div class="text p-3">
-                                            <div class="d-flex">
-                                                <div class="one">
-                                                    <h3><a href="/PublicRoom/DetailRoom/@item.idRoom">@item.name</a></h3>
-                                                    <p class="rate">
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <i class="icon-star"></i>
-                                                        <span>@item.view lượt xem</span>
-                                                    </p>
-                                                </div>
-                                                @{
-                                                    int price = item.cost - item.cost * item.discount / 100;
-                                                }
-                                            </div>
-                                            <p class="days"><span>@item.Type.name</span></p>
-                                            <hr>
-                                            <p class="bottom-area d-flex">
-                                                <span>Giá ban đầu : @item.cost (@item.discount %)</span>
-                                                <span class="ml-auto"><a href="#">Đặt phòng</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
+            <h4 class="mb-4">Các phòng khác có thể bạn sẽ thích</h4>
+            <div class="row">
+                @foreach (var item in ViewBag.ListRoomRelated)
+                {
+                    <div class="col-sm col-md-6 col-lg ftco-animate">
+                        <div class="destination">
+                            <a href="/PublicRoom/DetailRoom/@item.idRoom" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(/Content/images/@item.image);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-search2"></span>
                                 </div>
-                            }
-
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="/PublicRoom/DetailRoom/@item.idRoom">@item.name</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <span>@item.view lượt xem</span>
+                                        </p>
+                                    </div>
+                                    @{
+                                        int price = item.cost - item.cost * item.discount / 100;
+                                    }
+                                </div>
+                                <p class="days"><span>@item.Type.name</span></p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span>Giá ban đầu : @item.cost (@item.discount %)</span>
+                                    <span class="ml-auto"><a href="#">Đặt phòng</a></span>
+                                </p>
+                            </div>
                         </div>
-                    </div>*@
+                    </div>
+                }
+
+            </div>
+        </div>*@
 
                 </div>
             </div> <!-- .col-md-8 -->
         </div>
     </div>
+    <script>
+        const stars = document.querySelectorAll(".star1");
+
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].addEventListener("click", function () {
+                console.log("day")
+                resetStars();
+                setActiveStars(i);
+            });
+
+            stars[i].addEventListener("mouseover", function () {
+                resetStars();
+                setActiveStars(i);
+            });
+
+         @*   stars[i].addEventListener("mouseout", function () {
+                resetStars();
+            });*@
+        }
+        const commentForm = document.querySelector("#comment-form");
+        const commentInput = document.querySelector("#comment-input");
+        const commentList = document.querySelector("#comment-list");
+
+        commentForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const comment = commentInput.value.trim();
+            if (comment !== "") {
+                addComment(comment);
+                commentInput.value = "";
+            }
+        });
+
+        function addComment(comment) {
+            const newComment = document.createElement("li");
+            newComment.textContent = comment;
+            commentList.appendChild(newComment);
+        }
+        function resetStars() {
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].classList.remove("active");
+            }
+        }
+
+        function setActiveStars(index) {
+            for (let i = 0; i <= index; i++) {
+                console.log(stars[i].classList)
+                stars[i].classList.add("active");
+            }
+        }
+
+    </script>
 </section>
 

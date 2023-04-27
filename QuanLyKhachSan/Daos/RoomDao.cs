@@ -55,22 +55,22 @@ namespace QuanLyKhachSan.Daos
             return count;
         }
 
-        public List<Room> SearchByName(int page, int pagesize,string name)
+        public List<Room> SearchByName(int page, int pagesize,string name, int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            return myDb.rooms.Where(x => x.name.Contains(name)).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.rooms.Where(x => x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
-        public List<Room> SearchByType(int page, int pagesize,int idType)
+        public List<Room> SearchByType(int page, int pagesize,int idType,int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            return myDb.rooms.Where(x => x.idType == idType).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.rooms.Where(x => x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
-        public int GetNumberRoomByType(int idType)
+        public int GetNumberRoomByType(int idType, int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.idType == idType).ToList().Count;
+            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -80,10 +80,10 @@ namespace QuanLyKhachSan.Daos
             return count;
         }
 
-        public int GetNumberRoomByName(string name)
+        public int GetNumberRoomByName(string name, int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.name.Contains(name)).ToList().Count;
+            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -93,16 +93,16 @@ namespace QuanLyKhachSan.Daos
             return count;
         }
 
-        public List<Room> SearchByTypeAndName(int page, int pagesize, int idType,string name)
+        public List<Room> SearchByTypeAndName(int page, int pagesize, int idType,string name, int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            return myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.idType == idType && x.name.Contains(name)).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.idType == idType && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
-        public int GetNumberRoomByNameAndType(string name, int idType)
+        public int GetNumberRoomByNameAndType(string name, int idType, int numberChildren, int numberAdult)
         {
             var arrIdRoom = myDb.bookings.Where(x => x.status != 2).Select(x => x.idRoom).ToList();
-            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.name.Contains(name) && x.idType == idType).ToList().Count;
+            int total = myDb.rooms.Where(x => !arrIdRoom.Contains(x.idRoom) && x.name.Contains(name) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -134,6 +134,8 @@ namespace QuanLyKhachSan.Daos
             obj.discount = room.discount;
             obj.cost = room.cost;
             obj.idType = room.idType;
+            obj.numberChildren = room.numberChildren;
+            obj.numberAdult = room.numberAdult;
             myDb.SaveChanges();
         }
 

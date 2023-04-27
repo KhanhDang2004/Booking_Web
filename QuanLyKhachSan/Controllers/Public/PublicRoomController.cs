@@ -182,11 +182,13 @@ namespace QuanLyKhachSan.Controllers.Public
         {
             string name = form["name"];
             int idType = Int32.Parse(form["idType"]);
-            return RedirectToAction("Search", new { page = 0, name = name, idType = idType });
+            int numberChildren = Int32.Parse(form["numberChildren"]);
+            int numberAdult = Int32.Parse(form["numberAdult"]);
+            return RedirectToAction("Search", new { page = 0, name = name, idType = idType, numberChildren = numberChildren,numberAdult = numberAdult });
         }
 
         [HttpGet]
-        public ActionResult Search(int page,string name , int idType)
+        public ActionResult Search(int page,string name , int idType,int numberChildren, int numberAdult)
         {
             if (page == 0)
             {
@@ -194,27 +196,27 @@ namespace QuanLyKhachSan.Controllers.Public
             }
             if (name == null && idType != 0)
             {
-                ViewBag.List = roomDao.SearchByType(page, 3, idType);
+                ViewBag.List = roomDao.SearchByType(page, 3, idType,numberChildren,numberAdult);
                 ViewBag.tag = page;
                 ViewBag.key = 1;
                 ViewBag.idType = idType;
-                ViewBag.pageSize = roomDao.GetNumberRoomByType(idType);
+                ViewBag.pageSize = roomDao.GetNumberRoomByType(idType, numberChildren, numberAdult);
             }
             else if(name != null && idType == 0)
             {
-                ViewBag.List = roomDao.SearchByName(page, 3, name);
+                ViewBag.List = roomDao.SearchByName(page, 3, name, numberChildren, numberAdult);
                 ViewBag.tag = page;
                 ViewBag.key = 2;
                 ViewBag.name = name;
-                ViewBag.pageSize = roomDao.GetNumberRoomByName(name);
+                ViewBag.pageSize = roomDao.GetNumberRoomByName(name, numberChildren, numberAdult);
             } else if (name != null && idType != 0)
             {
-                ViewBag.List = roomDao.SearchByTypeAndName(page, 3,idType, name);
+                ViewBag.List = roomDao.SearchByTypeAndName(page, 3,idType, name, numberChildren, numberAdult);
                 ViewBag.tag = page;
                 ViewBag.key = 3;
                 ViewBag.name = name;
                 ViewBag.idType = idType;
-                ViewBag.pageSize = roomDao.GetNumberRoomByNameAndType(name,idType);
+                ViewBag.pageSize = roomDao.GetNumberRoomByNameAndType(name,idType, numberChildren, numberAdult);
             }
             else if (name == null && idType == 0)
             {

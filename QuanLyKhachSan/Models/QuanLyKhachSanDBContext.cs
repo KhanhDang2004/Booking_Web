@@ -29,6 +29,8 @@ namespace QuanLyKhachSan.Models
 
         public DbSet<Service> services { get; set; }
 
+        public DbSet<RoomComment> roomComments { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

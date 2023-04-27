@@ -162,12 +162,21 @@
     <Compile Include="Migrations\202204191519297_new2.designer.cs">
       <DependentUpon>202204191519297_new2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304271323372_update-db.cs" />
+    <Compile Include="Migrations\202304271323372_update-db.designer.cs">
+      <DependentUpon>202304271323372_update-db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304271435546_update-db1.cs" />
+    <Compile Include="Migrations\202304271435546_update-db1.designer.cs">
+      <DependentUpon>202304271435546_update-db1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingService.cs" />
     <Compile Include="Models\QuanLyKhachSanDBContext.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\RoomComment.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\User.cs" />
@@ -1005,6 +1014,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204191519297_new2.resx">
       <DependentUpon>202204191519297_new2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304271323372_update-db.resx">
+      <DependentUpon>202304271323372_update-db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304271435546_update-db1.resx">
+      <DependentUpon>202304271435546_update-db1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -44,5 +44,7 @@ namespace QuanLyKhachSan.Models
         public virtual Role Role { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<RoomComment> RoomComments { get; set; }
+
     }
 }
