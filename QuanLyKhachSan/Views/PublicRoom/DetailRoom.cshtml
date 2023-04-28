@@ -135,27 +135,30 @@
         </div>*@
                         <h5>Mô tả phòng</h5>
                         <p>@Html.Raw(ViewBag.Room.description)</p>
-                        <h5>Đánh giá</h5>
-                        <div id="rating">
-                            <span class="star1" data-star="1">&#9733;</span>
-                            <span class="star1" data-star="2">&#9733;</span>
-                            <span class="star1" data-star="3">&#9733;</span>
-                            <span class="star1" data-star="4">&#9733;</span>
-                            <span class="star1" data-star="5">&#9733;</span>
-                        </div>
+                        <h5>Bình luận</h5>
+                       
                         <div id="comments">
                             <ul id="comment-list">
-                                <li>Comment 1</li>
-                                <li>Comment 2</li>
+                                @foreach (var item in ViewBag.listComment)
+                                {
+                                    <li>@item.text - @item.User.fullName</li>
+                                }
                             </ul>
                             <form id="comment-form">
+                                <div id="rating">
+                                    <span class="star1 active" data-star="1">&#9733;</span>
+                                    <span class="star1" data-star="2">&#9733;</span>
+                                    <span class="star1" data-star="3">&#9733;</span>
+                                    <span class="star1" data-star="4">&#9733;</span>
+                                    <span class="star1" data-star="5">&#9733;</span>
+                                </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="comment-input" placeholder="Nhập bình luận tại đây..." required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" id="comment-submit" value="Bình luận" class="btn btn-primary py-3">
+                                    <input type="submit" id="comment-submit" onclick="postComment()" value="Bình luận" class="btn btn-primary py-3">
                                 </div>
-                                    
+
                             </form>
                         </div>
                     </div>
@@ -166,7 +169,7 @@
                         <form action="/PublicRoom/Booking" method="post">
                             <div class="fields">
                                 <div class="row">
-                                    <input type="hidden" name="idRoom" value="@ViewBag.Room.idRoom" />
+                                    <input type="hidden" name="idRoom" id="room-id" value="@ViewBag.Room.idRoom" />
                                     <div class="col-md-6">
                                         <label>Ngày tới:</label>
                                         <div class="form-group">
@@ -205,48 +208,6 @@
 
                     </div>
 
-                    @*<div class="col-md-12 hotel-single  mb-5 mt-5">
-            <h4 class="mb-4">Các phòng khác có thể bạn sẽ thích</h4>
-            <div class="row">
-                @foreach (var item in ViewBag.ListRoomRelated)
-                {
-                    <div class="col-sm col-md-6 col-lg ftco-animate">
-                        <div class="destination">
-                            <a href="/PublicRoom/DetailRoom/@item.idRoom" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(/Content/images/@item.image);">
-                                <div class="icon d-flex justify-content-center align-items-center">
-                                    <span class="icon-search2"></span>
-                                </div>
-                            </a>
-                            <div class="text p-3">
-                                <div class="d-flex">
-                                    <div class="one">
-                                        <h3><a href="/PublicRoom/DetailRoom/@item.idRoom">@item.name</a></h3>
-                                        <p class="rate">
-                                            <i class="icon-star"></i>
-                                            <i class="icon-star"></i>
-                                            <i class="icon-star"></i>
-                                            <i class="icon-star"></i>
-                                            <i class="icon-star"></i>
-                                            <span>@item.view lượt xem</span>
-                                        </p>
-                                    </div>
-                                    @{
-                                        int price = item.cost - item.cost * item.discount / 100;
-                                    }
-                                </div>
-                                <p class="days"><span>@item.Type.name</span></p>
-                                <hr>
-                                <p class="bottom-area d-flex">
-                                    <span>Giá ban đầu : @item.cost (@item.discount %)</span>
-                                    <span class="ml-auto"><a href="#">Đặt phòng</a></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                }
-
-            </div>
-        </div>*@
 
                 </div>
             </div> <!-- .col-md-8 -->
@@ -254,15 +215,16 @@
     </div>
     <script>
         const stars = document.querySelectorAll(".star1");
-
+        var numberStart = 1;
         for (let i = 0; i < stars.length; i++) {
             stars[i].addEventListener("click", function () {
-                console.log("day")
+                numberStart =i+1
                 resetStars();
                 setActiveStars(i);
             });
 
             stars[i].addEventListener("mouseover", function () {
+                numberStart = i + 1
                 resetStars();
                 setActiveStars(i);
             });
@@ -273,6 +235,7 @@
         }
         const commentForm = document.querySelector("#comment-form");
         const commentInput = document.querySelector("#comment-input");
+        const idRoom = document.querySelector("#room-id");
         const commentList = document.querySelector("#comment-list");
 
         commentForm.addEventListener("submit", function (event) {
@@ -283,6 +246,19 @@
                 commentInput.value = "";
             }
         });
+        function postComment() {
+            $.ajax({
+                url: "/PublicRoom/PostComment",
+                type: "post",
+                data: {
+                    comment: commentInput.value.trim(),
+                    idRoom: idRoom
+                },
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
 
         function addComment(comment) {
             const newComment = document.createElement("li");
@@ -300,7 +276,7 @@
                 console.log(stars[i].classList)
                 stars[i].classList.add("active");
             }
-        }
+        }     
 
     </script>
 </section>

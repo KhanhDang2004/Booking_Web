@@ -143,6 +143,7 @@
     <Compile Include="Controllers\Public\PublicUserController.cs" />
     <Compile Include="Daos\BookingDao.cs" />
     <Compile Include="Daos\BookingServiceDao.cs" />
+    <Compile Include="Daos\RoomCommentDao.cs" />
     <Compile Include="Daos\RoomDao.cs" />
     <Compile Include="Daos\ServiceDao.cs" />
     <Compile Include="Daos\TypeDao.cs" />

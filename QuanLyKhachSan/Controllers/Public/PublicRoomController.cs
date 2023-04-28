@@ -15,6 +15,7 @@ namespace QuanLyKhachSan.Controllers.Public
         BookingDao bookingDao = new BookingDao();
         BookingServiceDao bookingServiceDao = new BookingServiceDao();
         QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        RoomCommentDao roomComment = new RoomCommentDao();
         // GET: PublicRoom
         public ActionResult Index(int page)
         {
@@ -31,6 +32,7 @@ namespace QuanLyKhachSan.Controllers.Public
         public ActionResult DetailRoom(int id,string mess)
         {
             ViewBag.mess = mess;
+            ViewBag.listComment = roomComment.GetByIdRoom(id);
             roomDao.updateView(id);
             Room obj = roomDao.GetDetail(id);
             ViewBag.Room = obj;
@@ -224,5 +226,19 @@ namespace QuanLyKhachSan.Controllers.Public
             }
             return View();
         }
+
+        [HttpPost]
+        public JsonResult PostComment(string comment, int idRoom)
+        {
+            User user = (User)Session["USER"];
+            roomComment.Add(new RoomComment
+            {
+                idRoom = idRoom,
+                text = comment,
+                idUser = user.idUser
+            });
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
