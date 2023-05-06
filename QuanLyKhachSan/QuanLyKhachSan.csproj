@@ -171,6 +171,10 @@
     <Compile Include="Migrations\202304271435546_update-db1.designer.cs">
       <DependentUpon>202304271435546_update-db1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305020243092_add-column-star.cs" />
+    <Compile Include="Migrations\202305020243092_add-column-star.designer.cs">
+      <DependentUpon>202305020243092_add-column-star.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingService.cs" />
@@ -1021,6 +1025,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304271435546_update-db1.resx">
       <DependentUpon>202304271435546_update-db1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305020243092_add-column-star.resx">
+      <DependentUpon>202305020243092_add-column-star.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -522,3 +522,6 @@ C:\Users\ADMIN\source\repos\QuanLyKhachSanVer2\QuanLyKhachSan\obj\Debug\QuanLyKh
 C:\Users\ADMIN\source\repos\QuanLyKhachSanVer2\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.pdb
 C:\Users\ADMIN\source\repos\QuanLyKhachSanVer2\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.Migrations.updatedb.resources
 C:\Users\ADMIN\source\repos\QuanLyKhachSanVer2\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.Migrations.updatedb1.resources
+D:\.NET\BookingKhachSan\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.Migrations.updatedb.resources
+D:\.NET\BookingKhachSan\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.Migrations.updatedb1.resources
+D:\.NET\BookingKhachSan\QuanLyKhachSan\obj\Debug\QuanLyKhachSan.Migrations.addcolumnstar.resources

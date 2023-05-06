@@ -33,6 +33,7 @@ namespace QuanLyKhachSan.Controllers.Public
         {
             ViewBag.mess = mess;
             ViewBag.listComment = roomComment.GetByIdRoom(id);
+            ViewBag.Ave = roomComment.getAve(id);
             roomDao.updateView(id);
             Room obj = roomDao.GetDetail(id);
             ViewBag.Room = obj;
@@ -202,6 +203,8 @@ namespace QuanLyKhachSan.Controllers.Public
                 ViewBag.tag = page;
                 ViewBag.key = 1;
                 ViewBag.idType = idType;
+                ViewBag.numberChildren = numberChildren;
+                ViewBag.numberAdult = numberAdult;
                 ViewBag.pageSize = roomDao.GetNumberRoomByType(idType, numberChildren, numberAdult);
             }
             else if(name != null && idType == 0)
@@ -210,6 +213,8 @@ namespace QuanLyKhachSan.Controllers.Public
                 ViewBag.tag = page;
                 ViewBag.key = 2;
                 ViewBag.name = name;
+                ViewBag.numberChildren = numberChildren;
+                ViewBag.numberAdult = numberAdult;
                 ViewBag.pageSize = roomDao.GetNumberRoomByName(name, numberChildren, numberAdult);
             } else if (name != null && idType != 0)
             {
@@ -218,24 +223,30 @@ namespace QuanLyKhachSan.Controllers.Public
                 ViewBag.key = 3;
                 ViewBag.name = name;
                 ViewBag.idType = idType;
+                ViewBag.numberChildren = numberChildren;
+                ViewBag.numberAdult = numberAdult;
                 ViewBag.pageSize = roomDao.GetNumberRoomByNameAndType(name,idType, numberChildren, numberAdult);
             }
             else if (name == null && idType == 0)
             {
-                RedirectToAction("Index", "PublicHome");
+                List<Room> list = new List<Room>();
+                ViewBag.List = list;
+                RedirectToAction("Search", "PublicRoom");
             }
             return View();
         }
 
         [HttpPost]
-        public JsonResult PostComment(string comment, int idRoom)
+        public JsonResult PostComment(string comment, int idRoom, int star)
         {
             User user = (User)Session["USER"];
             roomComment.Add(new RoomComment
             {
+                createdDate = DateTime.Now,
                 idRoom = idRoom,
                 text = comment,
-                idUser = user.idUser
+                idUser = user.idUser,
+                star = star
             });
             return Json(true, JsonRequestBehavior.AllowGet);
         }

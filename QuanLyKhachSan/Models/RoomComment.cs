@@ -19,6 +19,10 @@ namespace QuanLyKhachSan.Models
 
         public int idUser { get; set; }
 
+        public int star { get; set; }
+
+        public DateTime createdDate { get; set; }
+
         public virtual Room Room { get; set; }
 
         public virtual User User { get; set; }
