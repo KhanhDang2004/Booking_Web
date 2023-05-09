@@ -122,7 +122,12 @@ namespace QuanLyKhachSan.Controllers.Public
                 {
                     DateTime dateCheckout = DateTime.Parse(booking.checkOutDate);
                     DateTime dateCheckin = DateTime.Parse(booking.checkInDate);
-                    int numberBooking = dateCheckout.Day - dateCheckin.Day;
+                    TimeSpan time = dateCheckout - dateCheckin;
+                    int numberBooking = time.Days;
+                    if(numberBooking <= 0)
+                    {
+                        return RedirectToAction(action, new { mess = "Error" });
+                    }
                     Room room = roomDao.GetDetail(booking.idRoom);
                     booking.idUser = user.idUser;
                     booking.createdDate = DateTime.Now;
@@ -155,7 +160,12 @@ namespace QuanLyKhachSan.Controllers.Public
                             return RedirectToAction(action, new { mess = "ErrorExist" });
                         }
                     }
-                    int numberBooking = dateCheckout.Day - dateCheckin.Day;
+                    TimeSpan time = dateCheckout - dateCheckin;
+                    int numberBooking = time.Days;
+                    if (numberBooking <= 0)
+                    {
+                        return RedirectToAction(action, new { mess = "Error" });
+                    }
                     Room room = roomDao.GetDetail(booking.idRoom);
                     booking.idUser = user.idUser;
                     booking.createdDate = DateTime.Now;

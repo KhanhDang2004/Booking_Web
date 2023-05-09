@@ -69,5 +69,10 @@ namespace QuanLyKhachSan.Daos
             
         }
 
+        public bool checkBooked(int userId, int roomId)
+        {
+            var obj = myDb.bookings.Where(x => x.idUser == userId && x.idRoom == roomId && x.status == 3).ToList();
+            return obj.Count > 0;
+        }
     }
 }

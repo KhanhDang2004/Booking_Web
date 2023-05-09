@@ -76,6 +76,22 @@
         </script>
     </div>
 }
+@if (ViewBag.mess == "Error")
+{
+
+    <div class="toast" data-delay="1000" style="position:fixed; top: 100PX; left: 10PX;z-index: 2000;width: 300px">
+        <script>
+            swal({
+                title: 'Không thể chọn ngày đi nhỏ hơn ngày tới',
+                /* text: 'Redirecting...', */
+                icon: 'error',
+                timer: 3000,
+                buttons: true,
+                type: 'success'
+            })
+        </script>
+    </div>
+}
 <section class="ftco-section ftco-degree-bg">
     <div class="container">
         <div class="row">
@@ -101,11 +117,11 @@
                         <h5 class="days"><span>Số lượng trẻ em: @ViewBag.Room.numberChildren</span></h5>
                         <p class="rate mb-5">
                             <span class="loc"><a href="#"><i class="icon-map"></i><span>@ViewBag.Room.Type.name</span></a></span>
-                           (@Math.Round(ViewBag.Ave, 1)/5<i class="icon-star"></i> - 
+                            (@Math.Round(ViewBag.Ave, 1)/5<i class="icon-star"></i> -
                             <span>@ViewBag.Room.view lượt xem</span>)
                         </p>
                         @*<p class="days"><span>Số lượng người lớn: @ViewBag.Room.numberAdult</span></p>
-                        <p class="days"><span>Số lượng trẻ em: @ViewBag.Room.numberChildren</span></p>*@
+                            <p class="days"><span>Số lượng trẻ em: @ViewBag.Room.numberChildren</span></p>*@
                         @*<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -144,22 +160,27 @@
                             </ul>
                             @if (userInfomatiom != null)
                             {
-                                <form id="comment-form">
-                                    <div id="rating">
-                                        <span class="star1 active" data-star="1">&#9733;</span>
-                                        <span class="star1 active" data-star="2">&#9733;</span>
-                                        <span class="star1 active" data-star="3">&#9733;</span>
-                                        <span class="star1 active" data-star="4">&#9733;</span>
-                                        <span class="star1 active" data-star="5">&#9733;</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="comment-input" placeholder="Nhập bình luận tại đây..." required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="button" id="comment-submit" onclick="postComment()" value="Bình luận" class="btn btn-primary py-3">
-                                    </div>
+                                var check = new QuanLyKhachSan.Daos.BookingDao().checkBooked(userInfomatiom.idUser, ViewBag.Room.idRoom);
+                                if (check)
+                                {
+                                    <form id="comment-form">
+                                        <div id="rating">
+                                            <span class="star1 active" data-star="1">&#9733;</span>
+                                            <span class="star1 active" data-star="2">&#9733;</span>
+                                            <span class="star1 active" data-star="3">&#9733;</span>
+                                            <span class="star1 active" data-star="4">&#9733;</span>
+                                            <span class="star1 active" data-star="5">&#9733;</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="comment-input" placeholder="Nhập bình luận tại đây..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="button" id="comment-submit" onclick="postComment()" value="Bình luận" class="btn btn-primary py-3">
+                                        </div>
 
-                                </form>
+                                    </form>
+                                }
+
                             }
                         </div>
                     </div>
@@ -174,13 +195,13 @@
                                     <div class="col-md-6">
                                         <label>Ngày tới:</label>
                                         <div class="form-group">
-                                            <input type="date" class="form-control" name="checkInDate" required placeholder="Email">
+                                            <input type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" class="form-control" name="checkInDate" required placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Ngày đi:</label>
                                         <div class="form-group">
-                                            <input type="date" name="checkOutDate" class="form-control" required placeholder="Date from">
+                                            <input type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" name="checkOutDate" class="form-control" required placeholder="Date from">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -236,7 +257,7 @@
         }
         const commentForm = document.querySelector("#comment-form");
         const commentInput = document.querySelector("#comment-input");
-        
+
         const commentList = document.querySelector("#comment-list");
 
         commentForm.addEventListener("submit", function (event) {
