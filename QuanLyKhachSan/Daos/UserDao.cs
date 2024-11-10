@@ -11,58 +11,58 @@ namespace QuanLyKhachSan.Daos
     public class UserDao
     {
 
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         public bool checkLogin(string userName, string password)
         {
-            var obj = myDb.users.FirstOrDefault(x => x.userName == userName && x.password == password);
+            var obj = myDb.Users.FirstOrDefault(x => x.userName == userName && x.password == password);
             if (obj == null) { return false; }
             return true;
         }
 
         public User getUserByUserName(string userName)
         {
-            return myDb.users.FirstOrDefault(x => x.userName.Equals(userName));
+            return myDb.Users.FirstOrDefault(x => x.userName.Equals(userName));
         }
 
         public User getUserByEmail(string email)
         {
-            return myDb.users.FirstOrDefault(x => x.email.Equals(email));
+            return myDb.Users.FirstOrDefault(x => x.email.Equals(email));
         }
 
         public User getInfor(int id)
         {
-            return myDb.users.FirstOrDefault(x => x.idUser == id);
+            return myDb.Users.FirstOrDefault(x => x.idUser == id);
         }
 
-        public List<User> getAdmin() { return myDb.users.Where(x => x.idRole == 1).ToList(); }
+        public List<User> getAdmin() { return myDb.Users.Where(x => x.idRole == 1).ToList(); }
 
-        public List<User> getNV() { return myDb.users.Where(x => x.idRole == 2).ToList(); }
+        public List<User> getNV() { return myDb.Users.Where(x => x.idRole == 2).ToList(); }
 
-        public List<User> getKH() { return myDb.users.Where(x => x.idRole == 3).ToList(); }
+        public List<User> getKH() { return myDb.Users.Where(x => x.idRole == 3).ToList(); }
 
         public void add(User user)
         {
-            myDb.users.Add(user);
+            myDb.Users.Add(user);
             myDb.SaveChanges();
         }
 
         public bool checkExistUsername(string userName)
         {
-            var obj = myDb.users.FirstOrDefault(x => x.userName == userName);
+            var obj = myDb.Users.FirstOrDefault(x => x.userName == userName);
             if (obj != null) { return true; }
             return false;
         }
 
         public void delete(int id)
         {
-            var obj = myDb.users.FirstOrDefault(x => x.idUser == id);
-            myDb.users.Remove(obj);
+            var obj = myDb.Users.FirstOrDefault(x => x.idUser == id);
+            myDb.Users.Remove(obj);
             myDb.SaveChanges();
         }
 
         public void update(User user)
         {
-            var obj = myDb.users.FirstOrDefault(x => x.idUser == user.idUser);
+            var obj = myDb.Users.FirstOrDefault(x => x.idUser == user.idUser);
             obj.fullName = user.fullName;
             obj.userName = user.userName;
             obj.address = user.address;
@@ -87,7 +87,7 @@ namespace QuanLyKhachSan.Daos
 
         public List<Booking> getCheck(int id)
         {
-            return myDb.bookings.Where(x => x.idUser == id).ToList();
+            return myDb.Bookings.Where(x => x.idUser == id).ToList();
         }
     }
 }

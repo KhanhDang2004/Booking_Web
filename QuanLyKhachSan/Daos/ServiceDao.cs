@@ -8,39 +8,39 @@ namespace QuanLyKhachSan.Daos
 {
     public class ServiceDao
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
 
         public List<Service> GetServices()
         {
-            return myDb.services.ToList();
+            return myDb.Services.ToList();
         }
 
         public List<Service> GetServicesTop5()
         {
-            return myDb.services.Take(5).ToList();
+            return myDb.Services.Take(5).ToList();
         }
 
         public int GetCostById(int id)
         {
-            return myDb.services.FirstOrDefault(x => x.idService == id).cost;
+            return myDb.Services.FirstOrDefault(x => x.idService == id).cost;
         }
 
         public void add(Service service)
         {
-            myDb.services.Add(service);
+            myDb.Services.Add(service);
             myDb.SaveChanges();
         }
 
         public void delete(int id)
         {
-            var obj = myDb.services.FirstOrDefault(x => x.idService == id);
-            myDb.services.Remove(obj);
+            var obj = myDb.Services.FirstOrDefault(x => x.idService == id);
+            myDb.Services.Remove(obj);
             myDb.SaveChanges();
         }
 
         public void update(Service service)
         {
-            var obj = myDb.services.FirstOrDefault(x => x.idService == service.idService);
+            var obj = myDb.Services.FirstOrDefault(x => x.idService == service.idService);
             obj.name = service.name;
             obj.cost = service.cost;
             myDb.SaveChanges();
@@ -48,7 +48,7 @@ namespace QuanLyKhachSan.Daos
 
         public Service GetServiceID(int id)
         {
-            return myDb.services.FirstOrDefault(x => x.idService == id);
+            return myDb.Services.FirstOrDefault(x => x.idService == id);
         }
 
         public List<BookingService> getCheck(int id)

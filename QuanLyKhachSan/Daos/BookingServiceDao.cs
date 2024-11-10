@@ -8,7 +8,7 @@ namespace QuanLyKhachSan.Daos
 {
     public class BookingServiceDao
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         public void Add(BookingService bookingService)
         {
             myDb.BookingServices.Add(bookingService);

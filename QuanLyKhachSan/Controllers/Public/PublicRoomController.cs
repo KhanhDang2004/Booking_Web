@@ -190,15 +190,29 @@ namespace QuanLyKhachSan.Controllers.Public
             }
         }
 
+
         [HttpPost]
         public ActionResult Search(FormCollection form)
         {
             string name = form["name"];
-            int idType = Int32.Parse(form["idType"]);
-            int numberChildren = Int32.Parse(form["numberChildren"]);
-            int numberAdult = Int32.Parse(form["numberAdult"]);
-            return RedirectToAction("Search", new { page = 0, name = name, idType = idType, numberChildren = numberChildren,numberAdult = numberAdult });
+            string idType = form["idType"];
+            int? numberAdult = string.IsNullOrEmpty(form["numberAdult"]) ? (int?)null : Int32.Parse(form["numberAdult"]);
+            int? numberChildren = string.IsNullOrEmpty(form["numberChildren"]) ? (int?)null : Int32.Parse(form["numberChildren"]);
+            DateTime? startDate = string.IsNullOrEmpty(form["startDate"]) ? (DateTime?)null : DateTime.Parse(form["startDate"]);
+            DateTime? endDate = string.IsNullOrEmpty(form["endDate"]) ? (DateTime?)null : DateTime.Parse(form["endDate"]);
+
+            return RedirectToAction("Search", new
+            {
+                page = 1, // Bắt đầu từ trang 1
+                name = name,
+                idType = idType,
+                numberAdult = numberAdult,
+                numberChildren = numberChildren,
+                startDate = startDate,
+                endDate = endDate
+            });
         }
+      
 
         [HttpGet]
         public ActionResult Search(int page,string name , int idType,int numberChildren, int numberAdult)

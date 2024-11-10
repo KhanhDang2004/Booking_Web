@@ -7,49 +7,49 @@ using System.Web;
 
 namespace QuanLyKhachSan.Daos
 {
-    public class RoomDao
+    public class RoomDao 
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
 
 
         public List<Room> GetRooms()
         {
-            return myDb.rooms.ToList();
+            return myDb.Rooms.ToList();
         }
 
         public List<Room> GetRoomTop5()
         {
-            return myDb.rooms.OrderByDescending(x => x.view).Take(3).ToList();
+            return myDb.Rooms.OrderByDescending(x => x.view).Take(3).ToList();
         }
 
         public List<Room> GetRoomDiscount()
         {
-            return myDb.rooms.Where(x => x.discount > 0).OrderByDescending(x => x.discount).Take(3).ToList();
+            return myDb.Rooms.Where(x => x.discount > 0).OrderByDescending(x => x.discount).Take(3).ToList();
         }
 
         public Room GetDetail(int id)
         {
-            return myDb.rooms.FirstOrDefault(x => x.idRoom == id);
+            return myDb.Rooms.FirstOrDefault(x => x.idRoom == id);
         }
 
         public List<Room> GetRoomByType(int typeId)
         {
-            return myDb.rooms.Where(x => x.idType == typeId).ToList();
+            return myDb.Rooms.Where(x => x.idType == typeId).ToList();
         }
 
         public List<Room> GetRoomsBlank(int page, int pagesize)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            return myDb.rooms.Where(x => ids.Contains(x.idRoom)).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.Rooms.Where(x => ids.Contains(x.idRoom)).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
         public int GetNumberRoom()
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            int total = myDb.rooms.Where(x => ids.Contains(x.idRoom)).ToList().Count;
+            int total = myDb.Rooms.Where(x => ids.Contains(x.idRoom)).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -61,26 +61,26 @@ namespace QuanLyKhachSan.Daos
 
         public List<Room> SearchByName(int page, int pagesize,string name, int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            return myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
         public List<Room> SearchByType(int page, int pagesize,int idType,int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            return myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
         public int GetNumberRoomByType(int idType, int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            int total = myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
+            int total = myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -92,10 +92,10 @@ namespace QuanLyKhachSan.Daos
 
         public int GetNumberRoomByName(string name, int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            int total = myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
+            int total = myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -107,18 +107,18 @@ namespace QuanLyKhachSan.Daos
 
         public List<Room> SearchByTypeAndName(int page, int pagesize, int idType,string name, int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            return myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
+            return myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.idType == idType && x.name.Contains(name) && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Skip((page - 1) * pagesize).Take(pagesize).ToList();
         }
 
         public int GetNumberRoomByNameAndType(string name, int idType, int numberChildren, int numberAdult)
         {
-            var arrIdRoom = myDb.bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
-            var allId = myDb.rooms.Select(x => x.idRoom).ToList();
+            var arrIdRoom = myDb.Bookings.Where(x => x.status == 0 || x.status == 1).Select(x => x.idRoom).Distinct().ToList();
+            var allId = myDb.Rooms.Select(x => x.idRoom).ToList();
             var ids = allId.Except(arrIdRoom).ToList();
-            int total = myDb.rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
+            int total = myDb.Rooms.Where(x => ids.Contains(x.idRoom) && x.name.Contains(name) && x.idType == idType && x.numberAdult >= numberAdult && x.numberChildren >= numberChildren).ToList().Count;
             int count = 0;
             count = total / 3;
             if (total % 3 != 0)
@@ -130,20 +130,20 @@ namespace QuanLyKhachSan.Daos
 
         public void add(Room room)
         {
-            myDb.rooms.Add(room);
+            myDb.Rooms.Add(room);
             myDb.SaveChanges();
         }
 
         public void delete(int id)
         {
-            var obj = myDb.rooms.FirstOrDefault(x => x.idRoom == id);
-            myDb.rooms.Remove(obj);
+            var obj = myDb.Rooms.FirstOrDefault(x => x.idRoom == id);
+            myDb.Rooms.Remove(obj);
             myDb.SaveChanges();
         }
 
         public void update(Room room)
         {
-            var obj = myDb.rooms.FirstOrDefault(x => x.idRoom == room.idRoom);
+            var obj = myDb.Rooms.FirstOrDefault(x => x.idRoom == room.idRoom);
             obj.name = room.name;
             obj.image = room.image;
             obj.description = room.description;
@@ -157,14 +157,14 @@ namespace QuanLyKhachSan.Daos
 
         public void updateView(int id)
         {
-            var obj = myDb.rooms.FirstOrDefault(x => x.idRoom == id);
+            var obj = myDb.Rooms.FirstOrDefault(x => x.idRoom == id);
             obj.view = obj.view + 1;
             myDb.SaveChanges();
         }
 
         public List<Booking> getCheck(int id)
         {
-            return myDb.bookings.Where(x => x.idRoom == id).ToList();
+            return myDb.Bookings.Where(x => x.idRoom == id).ToList();
         }
     }
 }

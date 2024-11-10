@@ -8,41 +8,41 @@ namespace QuanLyKhachSan.Daos
 {
     public class TypeDao
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
 
         public List<QuanLyKhachSan.Models.Type> GetTypes()
         {
-            return myDb.types.ToList();
+            return myDb.Types.ToList();
         }
 
         public void add(QuanLyKhachSan.Models.Type type)
         {
-            myDb.types.Add(type);
+            myDb.Types.Add(type);
             myDb.SaveChanges();
         }
 
         public void delete(int id)
         {
-              var obj = myDb.types.FirstOrDefault(x => x.idType == id);
-              myDb.types.Remove(obj);
+              var obj = myDb.Types.FirstOrDefault(x => x.idType == id);
+              myDb.Types.Remove(obj);
               myDb.SaveChanges();
         }
 
         public void update(QuanLyKhachSan.Models.Type type)
         {
-            var obj = myDb.types.FirstOrDefault(x => x.idType == type.idType);
+            var obj = myDb.Types.FirstOrDefault(x => x.idType == type.idType);
             obj.name = type.name;
             myDb.SaveChanges();
         }
 
         public QuanLyKhachSan.Models.Type getTypeId(int id)
         {
-            return myDb.types.FirstOrDefault(x => x.idType == id);
+            return myDb.Types.FirstOrDefault(x => x.idType == id);
         }
 
         public List<Room> getRoomType (int id)
         {
-            return myDb.rooms.Where(x => x.idType == id).ToList();
+            return myDb.Rooms.Where(x => x.idType == id).ToList();
         }
     }
 }

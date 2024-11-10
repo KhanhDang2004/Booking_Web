@@ -11,7 +11,8 @@ namespace QuanLyKhachSan.Controllers.Public
     public class PublicUserController : Controller
     {
         UserDao userDao = new UserDao();
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+       /* QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();*/
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         // GET: PublicUser
         public ActionResult Index()
         {
@@ -40,7 +41,7 @@ namespace QuanLyKhachSan.Controllers.Public
             int id = Int32.Parse(form["idUser"]);
             if (passwordNew.Equals(rePasswordNew))
             {
-                User user = myDb.users.FirstOrDefault(x => x.idUser == id);
+                User user = myDb.Users.FirstOrDefault(x => x.idUser == id);
                 user.password = userDao.md5(passwordNew);
                 myDb.SaveChanges();
                 return RedirectToAction("ProfileUser", new { id = id, mess = "Success" });

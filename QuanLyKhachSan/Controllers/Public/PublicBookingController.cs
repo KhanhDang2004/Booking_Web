@@ -17,7 +17,7 @@ namespace QuanLyKhachSan.Controllers.Public
     {
         BookingDao bookingDao = new BookingDao();
         BookingServiceDao bookingServiceDao = new BookingServiceDao();
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         // GET: PublicBooking
         public ActionResult Index()
         {
@@ -36,14 +36,14 @@ namespace QuanLyKhachSan.Controllers.Public
         public ActionResult CancelBooking(int id)
         {
             User user = (User)Session["USER"];
-            Booking booking = myDb.bookings.FirstOrDefault(x => x.idBooking == id);
+            Booking booking = myDb.Bookings.FirstOrDefault(x => x.idBooking == id);
             booking.status = 2;
             myDb.SaveChanges();
             return RedirectToAction("GetBookings", new {id = user.idUser, mess="1"});
         }
         public ActionResult PaymentMoMo(int id)
         {
-            var obj = myDb.bookings.Where(x => x.idBooking == id).FirstOrDefault();
+            var obj = myDb.Bookings.Where(x => x.idBooking == id).FirstOrDefault();
             int total = obj.totalMoney;
             string url = "https://localhost:44385/PublicBooking/ReturnUrl/" + id;
             //request params need to request to MoMo system
@@ -103,7 +103,7 @@ namespace QuanLyKhachSan.Controllers.Public
         public ActionResult ReturnUrl(int id)
         {
             User user = (User)Session["USER"];
-            var obj = myDb.bookings.Where(x => x.idBooking == id).FirstOrDefault();
+            var obj = myDb.Bookings.Where(x => x.idBooking == id).FirstOrDefault();
             obj.isPayment = true;
             myDb.SaveChanges();
             return RedirectToAction("GetBookings", new { id = user.idUser, mess = "2" });

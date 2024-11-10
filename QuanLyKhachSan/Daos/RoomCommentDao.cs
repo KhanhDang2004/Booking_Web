@@ -8,21 +8,21 @@ namespace QuanLyKhachSan.Daos
 {
     public class RoomCommentDao
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         public void Add(RoomComment roomComment)
         {
-            myDb.roomComments.Add(roomComment);
+            myDb.RoomComments.Add(roomComment);
             myDb.SaveChanges();
         }
 
         public List<RoomComment> GetByIdRoom(int idRoom)
         {
-            return myDb.roomComments.Where(x => x.idRoom == idRoom).OrderByDescending(x => x.createdDate).ToList();
+            return myDb.RoomComments.Where(x => x.idRoom == idRoom).OrderByDescending(x => x.createdDate).ToList();
         }
 
         public double getAve(int idRoom)
         {
-            var qr =  myDb.roomComments.Where(x => x.idRoom == idRoom).ToList();
+            var qr =  myDb.RoomComments.Where(x => x.idRoom == idRoom).ToList();
             return qr.Any() ? qr.Average(x => x.star) : 5;
         }
     }
