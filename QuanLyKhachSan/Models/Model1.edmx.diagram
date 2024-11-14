@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f27eebe133bc4a20838c954986c213bc" Name="Diagram1">
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.Booking" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.BookingService" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.Role" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.RoomComment" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.Room" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.Service" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.sysdiagram" Width="1.5" PointX="5.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.Type" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBQuanLyKhachSanModel.User" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_Bookings_dbo_Rooms_idRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_Bookings_dbo_Users_idUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_BookingServices_dbo_Bookings_idBooking" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_BookingServices_dbo_Services_idService" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_Users_dbo_Roles_idRole" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_RoomComments_dbo_Rooms_idRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_RoomComments_dbo_Users_idUser" ManuallyRouted="false" />
+        <AssociationConnector Association="DBQuanLyKhachSanModel.FK_dbo_Rooms_dbo_Types_idType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
