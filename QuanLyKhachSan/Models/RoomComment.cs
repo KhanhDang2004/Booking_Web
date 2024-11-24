@@ -11,11 +11,9 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class RoomComment
     {
-        [Key]
         public int idRoomComment { get; set; }
         public int idRoom { get; set; }
         public string text { get; set; }

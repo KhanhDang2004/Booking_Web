@@ -15,10 +15,26 @@ namespace QuanLyKhachSan.Daos
             return myDb.Types.ToList();
         }
 
-        public void add(QuanLyKhachSan.Models.Type type)
+       /* public void add(QuanLyKhachSan.Models.Type type)
         {
             myDb.Types.Add(type);
             myDb.SaveChanges();
+        }
+*/
+        public bool add(QuanLyKhachSan.Models.Type type)
+        {
+            // Kiểm tra loại phòng đã tồn tại
+            var existingType = myDb.Types.FirstOrDefault(t => t.name == type.name);
+
+            if (existingType != null) // Nếu loại phòng đã tồn tại
+            {
+                return false; // Không thêm mới
+            }
+
+            // Nếu không trùng, thêm mới loại phòng
+            myDb.Types.Add(type);
+            myDb.SaveChanges();
+            return true; // Thêm thành công
         }
 
         public void delete(int id)

@@ -11,8 +11,7 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Booking
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +19,7 @@ namespace QuanLyKhachSan.Models
         {
             this.BookingServices = new HashSet<BookingService>();
         }
-        [Key]
+    
         public int idBooking { get; set; }
         public int totalMoney { get; set; }
         public string checkInDate { get; set; }
@@ -31,7 +30,6 @@ namespace QuanLyKhachSan.Models
         public int idRoom { get; set; }
         public int idUser { get; set; }
     
-        public virtual Room Room { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookingService> BookingServices { get; set; }

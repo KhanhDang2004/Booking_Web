@@ -2,6 +2,7 @@
 using QuanLyKhachSan.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,7 +15,7 @@ namespace QuanLyKhachSan.Controllers.Public
         ServiceDao serviceDao = new ServiceDao();
         BookingDao bookingDao = new BookingDao();
         BookingServiceDao bookingServiceDao = new BookingServiceDao();
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         RoomCommentDao roomComment = new RoomCommentDao();
         // GET: PublicRoom
         public ActionResult Index(int page)
@@ -26,6 +27,25 @@ namespace QuanLyKhachSan.Controllers.Public
             ViewBag.List = roomDao.GetRoomsBlank(page, 3);
             ViewBag.tag = page;
             ViewBag.pageSize = roomDao.GetNumberRoom();
+
+            // Lấy danh sách phòng cùng với thông tin khách sạn
+          
+
+
+            return View();
+        }
+
+        // Action để lấy tất cả các phòng và tên khách sạn
+        public ActionResult HotelRooms(int hotelId)
+        {
+            // Sử dụng stored procedure để lấy dữ liệu phòng và tên khách sạn
+            var rooms =myDb.Database.SqlQuery<GetAllRoomsWithHotelName_Result>(
+                "EXEC GetAllRoomsWithHotelName @hotelId",
+                new SqlParameter("@hotelId", hotelId)
+            ).ToList();
+
+            // Truyền danh sách phòng vào ViewBag
+            ViewBag.List = rooms;
             return View();
         }
 

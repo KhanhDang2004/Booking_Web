@@ -11,11 +11,6 @@ namespace QuanLyKhachSan.Controllers.Public
     public class KhachSanAPIController : Controller
     {
         // GET: KhachSanAPI
-        public JsonResult Index()
-        {
-            DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
-            ArrayList a = myDb.get("exec GetRooms"); 
-            return Json(a,JsonRequestBehavior.AllowGet);
-        }
+       
     }
 }

@@ -11,11 +11,9 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class BookingService
     {
-        [Key]
         public int idBookingService { get; set; }
         public int idBooking { get; set; }
         public int idService { get; set; }

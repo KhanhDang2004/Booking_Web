@@ -11,11 +11,9 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class C__MigrationHistory
     {
-        [Key]
         public string MigrationId { get; set; }
         public string ContextKey { get; set; }
         public byte[] Model { get; set; }

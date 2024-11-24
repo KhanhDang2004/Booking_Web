@@ -11,17 +11,15 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Room
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Room()
         {
-            this.Bookings = new HashSet<Booking>();
             this.RoomComments = new HashSet<RoomComment>();
         }
-        [Key]    
-        
+    
         public int idRoom { get; set; }
         public string name { get; set; }
         public string image { get; set; }
@@ -32,9 +30,9 @@ namespace QuanLyKhachSan.Models
         public int view { get; set; }
         public int numberChildren { get; set; }
         public int numberAdult { get; set; }
+        public int idHotel { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual Hotel Hotel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomComment> RoomComments { get; set; }
         public virtual Type Type { get; set; }

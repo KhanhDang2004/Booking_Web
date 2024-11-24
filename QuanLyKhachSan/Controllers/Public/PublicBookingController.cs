@@ -18,6 +18,7 @@ namespace QuanLyKhachSan.Controllers.Public
         BookingDao bookingDao = new BookingDao();
         BookingServiceDao bookingServiceDao = new BookingServiceDao();
         DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
+
         // GET: PublicBooking
         public ActionResult Index()
         {

@@ -16,7 +16,7 @@ namespace QuanLyKhachSan.Controllers.Public
 {
     public class PublicAuthenticationController : Controller
     {
-        QuanLyKhachSanDBContext myDb = new QuanLyKhachSanDBContext();
+        DBQuanLyKhachSanEntities myDb = new DBQuanLyKhachSanEntities();
         // GET: PublicAuthentication
         UserDao userDao = new UserDao();
         // GET: AdminAuthentication
@@ -29,7 +29,11 @@ namespace QuanLyKhachSan.Controllers.Public
 
             return View();
         }
+        public ActionResult Register()
+        {
 
+            return View();
+        }
         public ActionResult CheckOTP()
         {
 
@@ -56,7 +60,7 @@ namespace QuanLyKhachSan.Controllers.Public
             int id = Int32.Parse(form["idUser"]);
             if (passwordNew.Equals(rePasswordNew))
             {
-                User user = myDb.users.FirstOrDefault(x => x.idUser == id);
+                User user = myDb.Users.FirstOrDefault(x => x.idUser == id);
                 user.password = userDao.md5(passwordNew);
                 myDb.SaveChanges();
                 ViewBag.mess = "ResetOk";
@@ -202,22 +206,50 @@ namespace QuanLyKhachSan.Controllers.Public
 
         public void sendMail(string email, string body)
         {
-            var formEmailAddress = ConfigurationManager.AppSettings["FormEmailAddress"].ToString();
-            var formEmailDisplayName = ConfigurationManager.AppSettings["FormEmailDisplayName"].ToString();
-            var formEmailPassword = ConfigurationManager.AppSettings["FormEmailPassword"].ToString();
-            var smtpHost = ConfigurationManager.AppSettings["SMTPHost"].ToString();
-            var smtpPort = ConfigurationManager.AppSettings["SMTPPost"].ToString();
-            bool enableSsl = bool.Parse(ConfigurationManager.AppSettings["EnabledSSL"].ToString());
-            MailMessage message = new MailMessage(new MailAddress(formEmailAddress, formEmailDisplayName), new MailAddress(email));
-            message.Subject = "Thông báo";
-            message.IsBodyHtml = true;
-            message.Body = body;
-            var client = new SmtpClient();
-            client.Credentials = new NetworkCredential(formEmailAddress, formEmailPassword);
-            client.Host = smtpHost;
-            client.EnableSsl = enableSsl;
-            client.Port = !string.IsNullOrEmpty(smtpPort) ? Convert.ToInt32(smtpPort) : 0;
-            client.Send(message);
+            try
+            {
+                var formEmailAddress = ConfigurationManager.AppSettings["FormEmailAddress"];
+                var formEmailDisplayName = ConfigurationManager.AppSettings["FormEmailDisplayName"];
+                var formEmailPassword = ConfigurationManager.AppSettings["FormEmailPassword"];
+                var smtpHost = ConfigurationManager.AppSettings["SMTPHost"];
+                var smtpPort = ConfigurationManager.AppSettings["SMTPPort"];
+                var enableSsl = ConfigurationManager.AppSettings["EnabledSSL"];
+
+                // Kiểm tra null
+                if (string.IsNullOrEmpty(formEmailAddress) ||
+                    string.IsNullOrEmpty(formEmailDisplayName) ||
+                    string.IsNullOrEmpty(formEmailPassword) ||
+                    string.IsNullOrEmpty(smtpHost) ||
+                    string.IsNullOrEmpty(smtpPort) ||
+                    string.IsNullOrEmpty(enableSsl))
+                {
+                    throw new Exception("Thiếu cấu hình trong Web.config");
+                }
+
+                MailMessage message = new MailMessage(
+                    new MailAddress(formEmailAddress, formEmailDisplayName),
+                    new MailAddress(email)
+                );
+                message.Subject = "Thông báo";
+                message.IsBodyHtml = true;
+                message.Body = body;
+
+                var client = new SmtpClient
+                {
+                    Credentials = new NetworkCredential(formEmailAddress, formEmailPassword),
+                    Host = smtpHost,
+                    EnableSsl = bool.Parse(enableSsl),
+                    Port = Convert.ToInt32(smtpPort)
+                };
+
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi hoặc xử lý ngoại lệ
+                Console.WriteLine($"Lỗi: {ex.Message}");
+            }
         }
+
     }
 }

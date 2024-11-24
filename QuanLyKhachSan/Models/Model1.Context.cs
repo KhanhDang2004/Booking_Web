@@ -10,12 +10,11 @@
 namespace QuanLyKhachSan.Models
 {
     using System;
-    using System.Collections;
-    using System.Configuration;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.SqlClient;
-
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
+    
     public partial class DBQuanLyKhachSanEntities : DbContext
     {
         public DBQuanLyKhachSanEntities()
@@ -31,54 +30,22 @@ namespace QuanLyKhachSan.Models
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<BookingService> BookingServices { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoomComment> RoomComments { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Type> Types { get; set; }
         public virtual DbSet<User> Users { get; set; }
-
-
-
-        public static string connectionString =" workstation id=Booking_Web.mssql.somee.com;packet size = 4096; user id = khanhdang2004_SQLLogin_1; pwd=7awij3qviv;data source = Booking_Web.mssql.somee.com; persist security info=False;initial catalog = Booking_Web; TrustServerCertificate=True";
-        public ArrayList get(string sql)
+    
+        public virtual ObjectResult<GetAllRoomsWithHotelName_Result> GetAllRoomsWithHotelName()
         {
-            ArrayList datalist = new ArrayList();
-            // Lấy chuỗi kết nối từ file cấu hình
-            string connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-
-            SqlConnection connection = new SqlConnection(connectionString);
-            SqlCommand command = new SqlCommand(sql, connection);
-            connection.Open();
-
-            using (SqlDataReader r = command.ExecuteReader())
-            {
-                while (r.Read())
-                {
-                    ArrayList row = new ArrayList();
-                    for (int i = 0; i < r.FieldCount; i++)
-                    {
-                        row.Add(xulydulieu(r.GetValue(i).ToString()));
-                    }
-                    datalist.Add(row);
-                }
-            }
-
-            connection.Close();
-            return datalist;
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllRoomsWithHotelName_Result>("GetAllRoomsWithHotelName");
         }
-
-        public string xulydulieu(string text)
+    
+        public virtual ObjectResult<GetRooms_Result> GetRooms()
         {
-            String s = text.Replace(",", "&#44;");
-            s = s.Replace("\"", "&34;");
-            s = s.Replace("'", "&39;");
-            s = s.Replace("\\r", "");
-            s = s.Replace("\\n", "");
-            return s;
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRooms_Result>("GetRooms");
         }
-
-
     }
 }

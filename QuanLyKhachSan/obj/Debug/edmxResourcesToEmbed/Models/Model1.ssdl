@@ -32,6 +32,16 @@
     <Property Name="idBooking" Type="int" Nullable="false" />
     <Property Name="idService" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Hotels">
+    <Key>
+      <PropertyRef Name="idHotel" />
+    </Key>
+    <Property Name="idHotel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="createdDate" Type="datetime" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="hotelName" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
   <EntityType Name="Roles">
     <Key>
       <PropertyRef Name="idRole" />
@@ -64,6 +74,7 @@
     <Property Name="view" Type="int" Nullable="false" />
     <Property Name="numberChildren" Type="int" Nullable="false" />
     <Property Name="numberAdult" Type="int" Nullable="false" />
+    <Property Name="idHotel" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Services">
     <Key>
@@ -72,16 +83,6 @@
     <Property Name="idService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="cost" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Types">
     <Key>
@@ -105,18 +106,6 @@
     <Property Name="idRole" Type="int" Nullable="false" />
     <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
   </EntityType>
-  <Association Name="FK_dbo_Bookings_dbo_Rooms_idRoom">
-    <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
-    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Rooms">
-        <PropertyRef Name="idRoom" />
-      </Principal>
-      <Dependent Role="Bookings">
-        <PropertyRef Name="idRoom" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_dbo_Bookings_dbo_Users_idUser">
     <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
@@ -177,6 +166,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_dbo_Rooms_dbo_Hotels_idHotel">
+    <End Role="Hotels" Type="Self.Hotels" Multiplicity="1" />
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotels">
+        <PropertyRef Name="idHotel" />
+      </Principal>
+      <Dependent Role="Rooms">
+        <PropertyRef Name="idHotel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_Rooms_dbo_Types_idType">
     <End Role="Types" Type="Self.Types" Multiplicity="1" />
     <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
@@ -201,21 +202,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetAllRoomsWithHotelName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="DBQuanLyKhachSanModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BookingServices" EntityType="Self.BookingServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoomComments" EntityType="Self.RoomComments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_dbo_Bookings_dbo_Rooms_idRoom" Association="Self.FK_dbo_Bookings_dbo_Rooms_idRoom">
-      <End Role="Rooms" EntitySet="Rooms" />
-      <End Role="Bookings" EntitySet="Bookings" />
-    </AssociationSet>
     <AssociationSet Name="FK_dbo_Bookings_dbo_Users_idUser" Association="Self.FK_dbo_Bookings_dbo_Users_idUser">
       <End Role="Users" EntitySet="Users" />
       <End Role="Bookings" EntitySet="Bookings" />
@@ -235,6 +234,10 @@
     <AssociationSet Name="FK_dbo_RoomComments_dbo_Users_idUser" Association="Self.FK_dbo_RoomComments_dbo_Users_idUser">
       <End Role="Users" EntitySet="Users" />
       <End Role="RoomComments" EntitySet="RoomComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Rooms_dbo_Hotels_idHotel" Association="Self.FK_dbo_Rooms_dbo_Hotels_idHotel">
+      <End Role="Hotels" EntitySet="Hotels" />
+      <End Role="Rooms" EntitySet="Rooms" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_Rooms_dbo_Types_idType" Association="Self.FK_dbo_Rooms_dbo_Types_idType">
       <End Role="Types" EntitySet="Types" />

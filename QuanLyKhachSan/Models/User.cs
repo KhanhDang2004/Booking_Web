@@ -11,7 +11,7 @@ namespace QuanLyKhachSan.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,8 +20,7 @@ namespace QuanLyKhachSan.Models
             this.Bookings = new HashSet<Booking>();
             this.RoomComments = new HashSet<RoomComment>();
         }
-        [Key]    
-        
+    
         public int idUser { get; set; }
         public string fullName { get; set; }
         public string userName { get; set; }
